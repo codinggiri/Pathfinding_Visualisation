@@ -83,8 +83,8 @@ npm run dev
 
 ## Usage
 
-1. Select a Start Node.
-2. Select an End Node.
+1. Given a Start Node.
+2. Given an End Node.
 3. Draw walls by dragging the mouse.
 4. Select a pathfinding algorithm.
 5. Click **Visualize**.
@@ -92,19 +92,6 @@ npm run dev
 
 ---
 
-## Screenshots
-
-Add project screenshots here.
-
-Example:
-
-```text
-assets/screenshots/home.png
-assets/screenshots/bfs.png
-assets/screenshots/astar.png
-```
-
----
 
 ## Future Improvements
 
