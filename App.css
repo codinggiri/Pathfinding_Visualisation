@@ -1,0 +1,233 @@
+/* ============================================================
+   App.css — Pathfinding Visualizer Styles
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0f1117;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+  user-select: none; /* drag karte waqt text select na ho */
+}
+
+/* ─── HEADER ─────────────────────────────────────────────── */
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #a43cef;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* ─── TOOLBAR ────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  background: #1e2130;
+  padding: 14px 20px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 1100px;
+  border: 1px solid #2d3348;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.control-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+select {
+  background: #0f1117;
+  color: #e2e8f0;
+  border: 1px solid #2d3348;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input[type="range"] {
+  width: 140px;
+  accent-color: #60a5fa;
+  cursor: pointer;
+}
+
+input[type="range"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-primary:not(:disabled):hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #1e2130;
+  color: #94a3b8;
+  border: 1px solid #2d3348;
+}
+
+.btn-secondary:not(:disabled):hover {
+  background: #2d3348;
+  color: #e2e8f0;
+}
+
+/* ─── STATS BAR ──────────────────────────────────────────── */
+.stats-bar {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.start-legend   { color: #4ade80; }
+.end-legend     { color: #f87171; }
+.visited-legend { color: #818cf8; }
+.path-legend    { color: #fbbf24; }
+.no-path        { color: #f87171; font-weight: 700; }
+.found          { color: #4ade80; font-weight: 700; }
+
+/* ─── ALGO INFO ──────────────────────────────────────────── */
+.algo-info {
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+  max-width: 700px;
+  line-height: 1.5;
+}
+
+/* ─── GRID ───────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  border: 1px solid #1e2130;
+  border-radius: 6px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ─── CELL BASE ──────────────────────────────────────────── */
+.cell {
+  aspect-ratio: 1;          /* square cell */
+  background: #1a1d2e;
+  border: 0.5px solid #1e2130;
+  cursor: crosshair;
+  transition: background 0.05s;
+}
+
+/* ─── CELL STATES ────────────────────────────────────────── */
+
+/* Start node — green */
+.cell.start {
+  background: #4ade80 !important;
+  border-color: #22c55e;
+}
+
+/* End node — red */
+.cell.end {
+  background: #f87171 !important;
+  border-color: #ef4444;
+}
+
+/* Wall — dark block */
+.cell.wall {
+  background: #374151 !important;
+  border-color: #4b5563;
+  animation: wallPop 0.15s ease;
+}
+
+@keyframes wallPop {
+  0%   { transform: scale(0.8); }
+  100% { transform: scale(1); }
+}
+
+/* Visited node — animated purple/blue sweep */
+.cell.visited {
+  animation: visitedAnim 0.4s ease forwards;
+}
+
+@keyframes visitedAnim {
+  0%   { background: #6366f1; transform: scale(0.5); border-radius: 50%; }
+  50%  { background: #818cf8; transform: scale(1.1); border-radius: 30%; }
+  100% { background: #2d3a6b; transform: scale(1);   border-radius: 0; }
+}
+
+/* Shortest path — yellow glow */
+.cell.path {
+  animation: pathAnim 0.3s ease forwards;
+}
+
+@keyframes pathAnim {
+  0%   { background: #fbbf24; transform: scale(0.6); border-radius: 50%; }
+  60%  { background: #f59e0b; transform: scale(1.2); border-radius: 20%; }
+  100% { background: #d97706; transform: scale(1);   border-radius: 0; }
+}
